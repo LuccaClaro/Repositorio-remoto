@@ -1,3 +1,5 @@
+import random
+
 def normaliza(dicio):
     banco_de_dados = {}
     for c, v in dicio.items():
@@ -7,7 +9,6 @@ def normaliza(dicio):
 
     return banco_de_dados
 
-import random
 def sorteia_pais(dicio):
     lista_paises = []
     for i in dicio.keys():
@@ -20,3 +21,15 @@ def esta_na_lista(pais, lista):
             if pais in str(i):
                 return True
     return False
+
+def sorteia_letra(palavra,lista):
+    especial = ['.', ',', '-', ';', ' ']
+    final = []
+    p = palavra.lower()
+    for i in p:
+        if i not in especial and i not in lista and i not in final:
+            final.append(i)
+    if final == []:
+          return ""
+    else:
+        return (random.choice(final))
