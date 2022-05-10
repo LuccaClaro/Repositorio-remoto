@@ -33,3 +33,11 @@ def sorteia_letra(palavra,lista):
           return ""
     else:
         return (random.choice(final))
+
+def adiciona_em_ordem(a,b,l):
+    n=0
+    for i in range (0, len (l)):
+        if l[i][1] < b:
+            n = i + 1
+    l. insert (n, [a,b])
+    return l
