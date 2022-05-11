@@ -72,8 +72,7 @@ while continuar == "s":
     "   dica       - entra no mercado de dicas\n"
     "   desisto    - desiste da rodada\n"
     "   inventario - exibe sua posição\n")
-    print(f"Observações:\n"
-    "    Todos os países estão com letra minúscula e sem acentuação")
+    print("")
     print("")
     O = "0. Letra da capital   - custa 3 tentativas"
     I = "1. Cor da bandeira   - custa 4 tentativas"
@@ -98,7 +97,13 @@ while continuar == "s":
     while tentativas > 0: 
         print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)") 
         print("")
-        pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?: ")
+        pergunta = input(f"{bcolors.ENDC}Qual seu palpite?: ")
+        print("")
+        print("")
+        print("")
+        minuscula = pergunta.lower()
+        from unidecode import unidecode
+        pergunta_inicial = (unidecode(minuscula))
         print(f"{bcolors.ENDC}===========================================================================================================================================================")
         if pergunta_inicial == "dica" or pergunta_inicial == "dicas":
             dicas = ("Dicas disponíveis:\n"
@@ -112,6 +117,7 @@ while continuar == "s":
             "------------------------------------------\n")
             print(dicas)
             dica_escolhida = (input("Escolha a dica [0|1|2|3|4|5]: "))
+            print("")
             if dica_escolhida == "0" or dica_escolhida == "1" or dica_escolhida == "2" or dica_escolhida == "3" or dica_escolhida == "4":
                 if dica_escolhida not in dicas_usadas:
                     if tentativas - (int(dica_escolhida) + 3) > 0:
@@ -232,7 +238,7 @@ while continuar == "s":
                     paises_chutados.append(pergunta_inicial)
                     latitude = banco_de_dados[pergunta_inicial]["geo"]["latitude"]
                     longitude = banco_de_dados[pergunta_inicial]["geo"]["longitude"]
-                    distancia = Funções.haversine(latitude,longitude)
+                    distancia = Funções.haversine(Dados.EARTH_RADIUS,latitude_pais_escolhido,longitude_pais_escolhido,latitude,longitude)
                     Funções.adiciona_em_ordem(pergunta_inicial,distancia,distancias_mais_perto)
                     print("Distâncias:") 
                     print("------------------------------------------")
@@ -254,23 +260,24 @@ while continuar == "s":
                                 print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
                             if d>=10000:
                                 print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
-                        print(f"{bcolors.ENDC}------------------------------------------")
-                        print(f"{bcolors.ENDC}Dicas:")
-                        print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
-                        for q in dicas_compradas:
-                            if q == atalho:
-                                print(f"{bcolors.OKBLUE}{q}")
-                            else:
-                                print(q)
-                        print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
-                        print("")
-                    else:
-                        print("Você já escolheu esse país")
-                elif pergunta_inicial == "desisto":
-                    certeza = input("Você quer desistir mesmo? |s|n|:")
-                    if certeza == "s":
-                        print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-                        print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
-                        print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-                        tentativas = 0
-                        desistiu = "sim"
+                    print(f"{bcolors.ENDC}------------------------------------------")
+                    print(f"{bcolors.ENDC}Dicas:")
+                    print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                    for q in dicas_compradas:
+                        if q == atalho:
+                            print(f"{bcolors.OKBLUE}{q}")
+                        else:
+                            print(q)
+                    print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                    print("")
+                else:
+                    print("Você já escolheu esse país")
+                    print("")
+        elif pergunta_inicial == "desisto":
+            certeza = input("Você quer desistir mesmo? |s|n|:")
+            if certeza == "s":
+                print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
+                print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                tentativas = 0
+                desistiu = "sim"
