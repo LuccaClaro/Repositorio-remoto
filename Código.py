@@ -135,7 +135,7 @@ while tentativas > 0:
                             tentativas += (int(dica_escolhida) + 3)
                             lista[int(dica_escolhida)] = ""
                             dicas_usadas.append(dica_escolhida)
-                            
+
                     #Dica 1
                     if int(dica_escolhida) == 1:
                         valor = 0
@@ -162,6 +162,12 @@ while tentativas > 0:
                     #Dica 2
                     if int(dica_escolhida) == 2:
                         atalho = ("População do país: {:,} habitantes".format(população_pais_escolhido).replace(',','.'))
+                        dicas_compradas.append (atalho)
+                        lista[int(dica_escolhida)] = ""
+                        dicas_usadas.append(dica_escolhida)
+                    #Dica 3
+                    if int(dica_escolhida) == 3:
+                        atalho = ("Área do país: {:,} km2".format(area_pais_escolhido).replace(',','.'))
                         dicas_compradas.append (atalho)
                         lista[int(dica_escolhida)] = ""
                         dicas_usadas.append(dica_escolhida)
