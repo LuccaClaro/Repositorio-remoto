@@ -114,6 +114,7 @@ while tentativas > 0:
             if dica_escolhida not in dicas_usadas:
                 if tentativas - (int(dica_escolhida) + 3) > 0:
                     tentativas -= (int(dica_escolhida) + 3)
+
                     #Dica 0
                     if int(dica_escolhida) == 0:
                         import random
@@ -131,6 +132,29 @@ while tentativas > 0:
                             print("")
                             print(f"{bcolors.ENDC}===========================================================================================================================================================")
                             print(f"{bcolors.FAIL} Não há mais letras...")
+                            tentativas += (int(dica_escolhida) + 3)
+                            lista[int(dica_escolhida)] = ""
+                            dicas_usadas.append(dica_escolhida)
+                            
+                    #Dica 1
+                    if int(dica_escolhida) == 1:
+                        valor = 0
+                        for c,v in banco_de_dados[pais_escolhido]["bandeira"].items():
+                            if v>valor and c not in cores_da_bandeira_lista and v>0:
+                                valor = v
+                                cor_bandeira_pais_escolhido = c
+                        if cor_bandeira_pais_escolhido not in cores_da_bandeira_lista:
+                            if contador_cor > 1:
+                                lu = f"Cor(es) da bandeira: {cores_da_bandeira_juntas}"
+                                dicas_compradas.remove(lu)
+                            cores_da_bandeira_lista.append(cor_bandeira_pais_escolhido)
+                            cores_da_bandeira_juntas = (', '.join(cores_da_bandeira_lista))
+                            atalho = (f"Cor(es) da bandeira: {cores_da_bandeira_juntas}")
+                            dicas_compradas.append(atalho)
+                            contador_cor += 1
+                        else:
+                            print("")
+                            print(f"{bcolors.FAIL} Não há mais cores...")
                             tentativas += (int(dica_escolhida) + 3)
                             lista[int(dica_escolhida)] = ""
                             dicas_usadas.append(dica_escolhida)
