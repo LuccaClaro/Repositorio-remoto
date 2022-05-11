@@ -73,3 +73,20 @@ print (f"{bcolors.ENDC}Comandos:\n"
 print(f"Observações:\n"
 "    Todos os países estão com letra minúscula e sem acentuação")
 print("")
+O = "0. Letra da capital   - custa 3 tentativas"
+I = "1. Cor da bandeira   - custa 4 tentativas"
+II = "2. População        - custa 5 tentativas"
+III = "3. Área              - custa 6 tentativas"
+IV = "4. Continente         - custa 7 tentativas"
+V = "5. Voltar"
+lista = [O,I,II,III,IV,V]
+dicas_usadas = []
+dicas_compradas = []
+paises_chutados = []
+distancias_mais_perto = []
+cores_da_bandeira_lista =[]
+lista_restrição_letras =[]
+lista_letras = []
+contador_cor = 1
+desistiu = "não"
+contador_letra = 1
