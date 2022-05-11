@@ -13,13 +13,13 @@ while continuar == "s":
         ENDC = '\033[0m'
         BOLD = '\033[1m'
         UNDERLINE = '\033[4m'
-        reset='\033[0m'
-        bold='\033[01m'
-        disable='\033[02m'
-        underline='\033[04m'
-        reverse='\033[07m'
-        strikethrough='\033[09m'
-        invisible='\033[08m'
+    reset='\033[0m'
+    bold='\033[01m'
+    disable='\033[02m'
+    underline='\033[04m'
+    reverse='\033[07m'
+    strikethrough='\033[09m'
+    invisible='\033[08m'
     class fg:
         black='\033[30m'
         red='\033[31m'
@@ -207,3 +207,32 @@ while continuar == "s":
                 print(f"{bcolors.OKGREEN}Parabens, você acertou restando {tentativas} tentativa(s)! O país era {pais_escolhido}")
                 print(f"{bcolors.ENDC}-------------------------------------------------------------------")
                 break
+            else:
+                if pergunta_inicial not in paises_chutados:
+                    tentativas -= 1
+                    paises_chutados.append(pergunta_inicial)
+                    latitude = banco_de_dados[pergunta_inicial]["geo"]["latitude"]
+                    longitude = banco_de_dados[pergunta_inicial]["geo"]["longitude"]
+                    distancia = Funções.haversine(latitude,longitude)
+                    Funções.adiciona_em_ordem(pergunta_inicial,distancia,distancias_mais_perto)
+                    print("Distâncias:") 
+                    print("------------------------------------------")
+                    espaço = ""  
+                    for l in distancias_mais_perto:
+                        d = int(l[1])
+                        wq = ("{:,}".format(d).replace(',','.'))
+                        if l[0] == pergunta_inicial:
+                            if d<1000:
+                                print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+                            if d>=1000 and d<10000:
+                                print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+                            if d>=10000:
+                                print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
+                        else:
+                            if d<1000:
+                                print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+                            if d>=1000 and d<10000:
+                                print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+                            if d>=10000:
+                                print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
+                        print(f"{bcolors.ENDC}------------------------------------------")
