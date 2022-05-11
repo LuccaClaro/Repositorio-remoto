@@ -9,3 +9,6 @@ v2 - 02/05/2022
 
 v3 - 10/05/2022
   Foram criados três novos arquivos, sendo eles: um arquivo responsável pelo Código do jogo, outro responsável pelo Banco de dados no qual o jogo utilizará e outro responsavél pelas funções que serão utilizadas mais uma vez no Código do jogo.
+
+v4 - 11/05/2022
+  Foi atualizado o Código do jogo, adicionando o respectivo menu do jogo com todas as funções e opções visíveis, também foram adicionadas as dicas e cores no código.
