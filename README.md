@@ -1,4 +1,6 @@
 # Repositorio-remoto
+Equipe: Gabriel Mendes, Lucca Claro
+
 v1 - 28/04/2022
   Foi criado o Repositorio-remoto no GitHub para efetuar commits do projeto "EP2" da disciplina Design de Software.
   
