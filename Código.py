@@ -1,5 +1,6 @@
 import Funções
 import Dados
+import unicodedata
 
 continuar = "s"
 while continuar == "s":
@@ -97,13 +98,15 @@ while continuar == "s":
     while tentativas > 0: 
         print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)") 
         print("")
-        pergunta = input(f"{bcolors.ENDC}Qual seu palpite?: ")
+        original = input(f"{bcolors.ENDC}Qual seu palpite?: ")
         print("")
         print("")
         print("")
-        minuscula = pergunta.lower()
-        from unidecode import unidecode
-        pergunta_inicial = (unidecode(minuscula))
+        processamento_2 = unicodedata.normalize("NFD", original)
+        processamento_2 = processamento_2.encode("ascii", "ignore")
+        processamento_2 = processamento_2.decode("utf-8")
+        pergunta_inicial = processamento_2.lower()
+
         print(f"{bcolors.ENDC}===========================================================================================================================================================")
         if pergunta_inicial == "dica" or pergunta_inicial == "dicas":
             dicas = ("Dicas disponíveis:\n"
@@ -281,3 +284,37 @@ while continuar == "s":
                 print(f"{bcolors.ENDC}-------------------------------------------------------------------")
                 tentativas = 0
                 desistiu = "sim"
+        elif pergunta_inicial == "inventario":
+          print("Distâncias:")  
+          print("------------------------------------------") 
+          for l in distancias_mais_perto:
+            d = int(l[1])
+            wq = ("{:,}".format(d).replace(',','.'))
+            if l[0] == pergunta_inicial:
+              if d<1000:
+                print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+              if d>=1000 and d<10000:
+                print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+              if d>=10000:
+                print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
+            else:
+              if d<1000:
+                print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+              if d>=1000 and d<10000:
+                print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+              if d>=10000:
+                print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
+          print(f"{bcolors.ENDC}------------------------------------------")
+          print("")
+          print("Dicas:")
+          print(f"{bcolors.ENDC}------------------------------------------")
+          for q in dicas_compradas:
+            print(q)
+          print(f"{bcolors.ENDC}------------------------------------------")
+        elif pergunta_inicial not in lista_paises:
+          print("País desconhecido")
+    if desistiu != "sim" and tentativas == 0:
+      print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+      print(f"{bcolors.FAIL}Não foi dessa vez :(     A resposta era {pais_escolhido}")
+      print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+    continuar = input("Quer jogar novamente? |s|n|:")
