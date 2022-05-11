@@ -1,4 +1,5 @@
 import random
+import math
 
 def normaliza(dicio):
     banco_de_dados = {}
@@ -41,3 +42,7 @@ def adiciona_em_ordem(a,b,l):
             n = i + 1
     l. insert (n, [a,b])
     return l
+
+import math
+def haversine(r,x,y,a,b):
+    return 2 * r * (math.asin((((math.sin((math.radians((a-x)/2))))**2) + ((math.cos(math.radians(x))*math.cos(math.radians(a))) * ((math.sin((math.radians((b-y)/2))))**2)))**(1/2)))
