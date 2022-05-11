@@ -193,7 +193,9 @@ while tentativas > 0:
                 elif tentativas - (int(dica_escolhida) + 3) <= 0:
                     print("")
                     print(f"{fg.yellow}Você não possui tentativas suficientes para comprar essa dica")
-            elif dica_escolhida == "5":
-                print("")
             else:
                 print("Esta dica não existe\n")
+        elif dica_escolhida == "5":
+            print("")
+        else:
+            print("Esta dica não existe\n")
