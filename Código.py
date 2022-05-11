@@ -165,9 +165,35 @@ while tentativas > 0:
                         dicas_compradas.append (atalho)
                         lista[int(dica_escolhida)] = ""
                         dicas_usadas.append(dica_escolhida)
+
                     #Dica 3
                     if int(dica_escolhida) == 3:
                         atalho = ("Área do país: {:,} km2".format(area_pais_escolhido).replace(',','.'))
                         dicas_compradas.append (atalho)
                         lista[int(dica_escolhida)] = ""
                         dicas_usadas.append(dica_escolhida)
+
+                    #Dica 4
+                    if int(dica_escolhida) == 4:
+                        atalho = (f'Continente do país: {continente_pais_escolhido}')
+                        dicas_compradas.append (atalho)
+                        lista[int(dica_escolhida)] = ""
+                        dicas_usadas.append(dica_escolhida)
+
+                    print("------------------------------------------")
+                    print("")
+                    print(f"{bcolors.ENDC}Dicas:")
+                    print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                    for q in dicas_compradas:
+                        if q == atalho:
+                            print(f"{bcolors.OKBLUE}{q}")
+                        else:
+                            print(q)
+                    print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                elif tentativas - (int(dica_escolhida) + 3) <= 0:
+                    print("")
+                    print(f"{fg.yellow}Você não possui tentativas suficientes para comprar essa dica")
+            elif dica_escolhida == "5":
+                print("")
+            else:
+                print("Esta dica não existe\n")
