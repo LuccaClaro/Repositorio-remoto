@@ -90,3 +90,22 @@ lista_letras = []
 contador_cor = 1
 desistiu = "não"
 contador_letra = 1
+
+print(f"{bcolors.ENDC}Um país foi escolhido dentro de {len(lista_paises)} países, tente advinhar!")
+tentativas = 20
+while tentativas > 0: 
+    print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)") 
+    print("")
+    pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?:")
+    print(f"{bcolors.ENDC}===========================================================================================================================================================")
+    if pergunta_inicial == "dica" or pergunta_inicial == "dicas":
+        dicas = ("Dicas disponíveis:\n"
+        "------------------------------------------\n"
+        f"{lista[0]}\n"
+        f"{lista[1]}\n"
+        f"{lista[2]}\n"
+        f"{lista[3]}\n"
+        f"{lista[4]}\n"
+        f"{lista[5]}\n"
+        "------------------------------------------\n")
+        print(dicas)
