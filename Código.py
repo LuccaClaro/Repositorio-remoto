@@ -180,7 +180,26 @@ while continuar == "s":
                             dicas_compradas.append (atalho)
                             lista[int(dica_escolhida)] = ""
                             dicas_usadas.append(dica_escolhida)
-
+                        print("Distâncias:") 
+                        print("------------------------------------------")
+                        espaço = ""  
+                        for l in distancias_mais_perto:
+                            d = int(l[1])
+                            wq = ("{:,}".format(d).replace(',','.'))
+                            if l[0] == pergunta_inicial:
+                                if d<1000:
+                                    print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+                                if d>=1000 and d<10000:
+                                    print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+                                if d>=10000:
+                                    print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
+                                else:
+                                    if d<1000:
+                                        print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+                                    if d>=1000 and d<10000:
+                                        print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+                                    if d>=10000:
+                                        print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
                         print("------------------------------------------")
                         print("")
                         print(f"{bcolors.ENDC}Dicas:")
@@ -236,3 +255,22 @@ while continuar == "s":
                             if d>=10000:
                                 print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
                         print(f"{bcolors.ENDC}------------------------------------------")
+                        print(f"{bcolors.ENDC}Dicas:")
+                        print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                        for q in dicas_compradas:
+                            if q == atalho:
+                                print(f"{bcolors.OKBLUE}{q}")
+                            else:
+                                print(q)
+                        print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                        print("")
+                    else:
+                        print("Você já escolheu esse país")
+                elif pergunta_inicial == "desisto":
+                    certeza = input("Você quer desistir mesmo? |s|n|:")
+                    if certeza == "s":
+                        print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                        print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
+                        print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                        tentativas = 0
+                        desistiu = "sim"
