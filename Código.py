@@ -96,7 +96,7 @@ tentativas = 20
 while tentativas > 0: 
     print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)") 
     print("")
-    pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?:")
+    pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?: ")
     print(f"{bcolors.ENDC}===========================================================================================================================================================")
     if pergunta_inicial == "dica" or pergunta_inicial == "dicas":
         dicas = ("Dicas disponíveis:\n"
@@ -109,3 +109,28 @@ while tentativas > 0:
         f"{lista[5]}\n"
         "------------------------------------------\n")
         print(dicas)
+        dica_escolhida = (input("Escolha a dica [0|1|2|3|4|5]: "))
+        if dica_escolhida == "0" or dica_escolhida == "1" or dica_escolhida == "2" or dica_escolhida == "3" or dica_escolhida == "4":
+            if dica_escolhida not in dicas_usadas:
+                if tentativas - (int(dica_escolhida) + 3) > 0:
+                    tentativas -= (int(dica_escolhida) + 3)
+                    #Dica 0
+                    if int(dica_escolhida) == 0:
+                        import random
+                        letra_capital_pais_escolhido = Funções.sorteia_letra(banco_de_dados[pais_escolhido]["capital"],lista_restrição_letras)
+                        lista_letras.append(letra_capital_pais_escolhido)
+                        if letra_capital_pais_escolhido != "":
+                            if contador_letra > 1:
+                                dicas_compradas.remove(f"Letra(s) da capital: {letras_juntas}")
+                            lista_restrição_letras.append(letra_capital_pais_escolhido)
+                            letras_juntas = (', '.join(lista_letras))
+                            atalho = (f"Letra(s) da capital: {letras_juntas}")
+                            dicas_compradas.append(atalho)
+                            contador_letra += 1
+                        if letra_capital_pais_escolhido == "":
+                            print("")
+                            print(f"{bcolors.ENDC}===========================================================================================================================================================")
+                            print(f"{bcolors.FAIL} Não há mais letras...")
+                            tentativas += (int(dica_escolhida) + 3)
+                            lista[int(dica_escolhida)] = ""
+                            dicas_usadas.append(dica_escolhida)
