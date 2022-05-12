@@ -1,6 +1,7 @@
 import Funções
 import Dados
 import unicodedata
+import random
 
 continuar = "s"
 while continuar == "s":
@@ -93,102 +94,193 @@ while continuar == "s":
     desistiu = "não"
     contador_letra = 1
 
-    print(f"{bcolors.ENDC}Um país foi escolhido dentro de {len(lista_paises)} países, tente advinhar!")
-    tentativas = 20
-    while tentativas > 0: 
-        print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)") 
+    print(f"{fg.yellow}Modos de jogo: Normal|n|, Bandeira|b|, Capitais|c|{reset}\n")
+    modo_jogo = input("Escolha um modo de jogo |n|b|c|:")
+    print("============================================================================================================================================")
+    
+    if modo_jogo == "c":
         print("")
-        original = input(f"{bcolors.ENDC}Qual seu palpite?: ")
-        print("")
-        print("")
-        print("")
-        processamento_2 = unicodedata.normalize("NFD", original)
-        processamento_2 = processamento_2.encode("ascii", "ignore")
-        processamento_2 = processamento_2.decode("utf-8")
-        pergunta_inicial = processamento_2.lower()
+        print("Nesse modo você receberá o nome da capital e o continente e deverá acertar o país, o jogo continua até você errar\n")
+        cond = True
+        pontuação = 0
+        while cond != False:
+            capital_pais_escolhido = banco_de_dados[pais_escolhido]["capital"]
+            continente_pais_escolhido = banco_de_dados[pais_escolhido]['continente']
+            print(f"Sua pontuação:{fg.pink}{pontuação}{reset}")
+            original = input(f"Qual é o país cuja capital capital é {fg.pink}{capital_pais_escolhido}{reset} e o continente é {fg.pink}{continente_pais_escolhido}{reset}?:\n")
+            processamento_2 = unicodedata.normalize("NFD", original)
+            processamento_2 = processamento_2.encode("ascii", "ignore")
+            processamento_2 = processamento_2.decode("utf-8")
+            tentativa = processamento_2.lower()
+            if tentativa in lista_paises:
+                if tentativa == pais_escolhido:
+                    print(f"{bcolors.OKGREEN}Correto{reset}")
+                    print("")
+                    pontuação += 1
+                    lista_paises.remove(pais_escolhido)
+                    pais_escolhido = (random.choice(lista_paises))
+                else:
+                    print(f"{bcolors.FAIL}Incorreto, a resposta era {fg.pink}{pais_escolhido}{reset}\n")
+                    print(f"Pontuação final {fg.pink}{pontuação}{reset}")
+                    break
+            else:
+                print("País desconhecido")
+            print("============================================================================================================================================")
 
-        print(f"{bcolors.ENDC}===========================================================================================================================================================")
-        if pergunta_inicial == "dica" or pergunta_inicial == "dicas":
-            dicas = ("Dicas disponíveis:\n"
-            "------------------------------------------\n"
-            f"{lista[0]}\n"
-            f"{lista[1]}\n"
-            f"{lista[2]}\n"
-            f"{lista[3]}\n"
-            f"{lista[4]}\n"
-            f"{lista[5]}\n"
-            "------------------------------------------\n")
-            print(dicas)
-            dica_escolhida = (input("Escolha a dica [0|1|2|3|4|5]: "))
+        continuar = input("Quer jogar novamente? |s|n|:")
+
+    if modo_jogo == "n":
+        print ("")
+        print(f"{bcolors.ENDC}Um país foi escolhido dentro de {len(lista_paises)} países, tente advinhar!")
+        tentativas = 20
+        while tentativas > 0: 
+            print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)") 
             print("")
-            if dica_escolhida == "0" or dica_escolhida == "1" or dica_escolhida == "2" or dica_escolhida == "3" or dica_escolhida == "4":
-                if dica_escolhida not in dicas_usadas:
-                    if tentativas - (int(dica_escolhida) + 3) > 0:
-                        tentativas -= (int(dica_escolhida) + 3)
+            original = input(f"{bcolors.ENDC}Qual seu palpite?: ")
+            print("")
+            print("")
+            print("")
+            processamento_2 = unicodedata.normalize("NFD", original)
+            processamento_2 = processamento_2.encode("ascii", "ignore")
+            processamento_2 = processamento_2.decode("utf-8")
+            pergunta_inicial = processamento_2.lower()
 
-                        #Dica 0
-                        if int(dica_escolhida) == 0:
-                            letra_capital_pais_escolhido = Funções.sorteia_letra(banco_de_dados[pais_escolhido]["capital"],lista_restrição_letras)
-                            lista_letras.append(letra_capital_pais_escolhido)
-                            if letra_capital_pais_escolhido != "":
-                                if contador_letra > 1:
-                                    dicas_compradas.remove(f"Letra(s) da capital: {letras_juntas}")
-                                lista_restrição_letras.append(letra_capital_pais_escolhido)
-                                letras_juntas = (', '.join(lista_letras))
-                                atalho = (f"Letra(s) da capital: {letras_juntas}")
-                                dicas_compradas.append(atalho)
-                                contador_letra += 1
-                            if letra_capital_pais_escolhido == "":
-                                print("")
-                                print(f"{bcolors.ENDC}===========================================================================================================================================================")
-                                print(f"{bcolors.FAIL} Não há mais letras...")
-                                tentativas += (int(dica_escolhida) + 3)
+            print(f"{bcolors.ENDC}===========================================================================================================================================================")
+            if pergunta_inicial == "dica" or pergunta_inicial == "dicas":
+                dicas = ("Dicas disponíveis:\n"
+                "------------------------------------------\n"
+                f"{lista[0]}\n"
+                f"{lista[1]}\n"
+                f"{lista[2]}\n"
+                f"{lista[3]}\n"
+                f"{lista[4]}\n"
+                f"{lista[5]}\n"
+                "------------------------------------------\n")
+                print(dicas)
+                dica_escolhida = (input("Escolha a dica [0|1|2|3|4|5]: "))
+                print("")
+                if dica_escolhida == "0" or dica_escolhida == "1" or dica_escolhida == "2" or dica_escolhida == "3" or dica_escolhida == "4":
+                    if dica_escolhida not in dicas_usadas:
+                        if tentativas - (int(dica_escolhida) + 3) > 0:
+                            tentativas -= (int(dica_escolhida) + 3)
+
+                            #Dica 0
+                            if int(dica_escolhida) == 0:
+                                letra_capital_pais_escolhido = Funções.sorteia_letra(banco_de_dados[pais_escolhido]["capital"],lista_restrição_letras)
+                                lista_letras.append(letra_capital_pais_escolhido)
+                                if letra_capital_pais_escolhido != "":
+                                    if contador_letra > 1:
+                                        dicas_compradas.remove(f"Letra(s) da capital: {letras_juntas}")
+                                    lista_restrição_letras.append(letra_capital_pais_escolhido)
+                                    letras_juntas = (', '.join(lista_letras))
+                                    atalho = (f"Letra(s) da capital: {letras_juntas}")
+                                    dicas_compradas.append(atalho)
+                                    contador_letra += 1
+                                if letra_capital_pais_escolhido == "":
+                                    print("")
+                                    print(f"{bcolors.ENDC}===========================================================================================================================================================")
+                                    print(f"{bcolors.FAIL} Não há mais letras...")
+                                    tentativas += (int(dica_escolhida) + 3)
+                                    lista[int(dica_escolhida)] = ""
+                                    dicas_usadas.append(dica_escolhida)
+
+                            #Dica 1
+                            if int(dica_escolhida) == 1:
+                                valor = 0
+                                for c,v in banco_de_dados[pais_escolhido]["bandeira"].items():
+                                    if v>valor and c not in cores_da_bandeira_lista and v>0:
+                                        valor = v
+                                        cor_bandeira_pais_escolhido = c
+                                if cor_bandeira_pais_escolhido not in cores_da_bandeira_lista:
+                                    if contador_cor > 1:
+                                        lu = f"Cor(es) da bandeira: {cores_da_bandeira_juntas}"
+                                        dicas_compradas.remove(lu)
+                                    cores_da_bandeira_lista.append(cor_bandeira_pais_escolhido)
+                                    cores_da_bandeira_juntas = (', '.join(cores_da_bandeira_lista))
+                                    atalho = (f"Cor(es) da bandeira: {cores_da_bandeira_juntas}")
+                                    dicas_compradas.append(atalho)
+                                    contador_cor += 1
+                                else:
+                                    print("")
+                                    print(f"{bcolors.FAIL} Não há mais cores...")
+                                    tentativas += (int(dica_escolhida) + 3)
+                                    lista[int(dica_escolhida)] = ""
+                                    dicas_usadas.append(dica_escolhida)
+
+                            #Dica 2
+                            if int(dica_escolhida) == 2:
+                                atalho = ("População do país: {:,} habitantes".format(população_pais_escolhido).replace(',','.'))
+                                dicas_compradas.append (atalho)
                                 lista[int(dica_escolhida)] = ""
                                 dicas_usadas.append(dica_escolhida)
 
-                        #Dica 1
-                        if int(dica_escolhida) == 1:
-                            valor = 0
-                            for c,v in banco_de_dados[pais_escolhido]["bandeira"].items():
-                                if v>valor and c not in cores_da_bandeira_lista and v>0:
-                                    valor = v
-                                    cor_bandeira_pais_escolhido = c
-                            if cor_bandeira_pais_escolhido not in cores_da_bandeira_lista:
-                                if contador_cor > 1:
-                                    lu = f"Cor(es) da bandeira: {cores_da_bandeira_juntas}"
-                                    dicas_compradas.remove(lu)
-                                cores_da_bandeira_lista.append(cor_bandeira_pais_escolhido)
-                                cores_da_bandeira_juntas = (', '.join(cores_da_bandeira_lista))
-                                atalho = (f"Cor(es) da bandeira: {cores_da_bandeira_juntas}")
-                                dicas_compradas.append(atalho)
-                                contador_cor += 1
-                            else:
-                                print("")
-                                print(f"{bcolors.FAIL} Não há mais cores...")
-                                tentativas += (int(dica_escolhida) + 3)
+                            #Dica 3
+                            if int(dica_escolhida) == 3:
+                                atalho = ("Área do país: {:,} km2".format(area_pais_escolhido).replace(',','.'))
+                                dicas_compradas.append (atalho)
                                 lista[int(dica_escolhida)] = ""
                                 dicas_usadas.append(dica_escolhida)
 
-                        #Dica 2
-                        if int(dica_escolhida) == 2:
-                            atalho = ("População do país: {:,} habitantes".format(população_pais_escolhido).replace(',','.'))
-                            dicas_compradas.append (atalho)
-                            lista[int(dica_escolhida)] = ""
-                            dicas_usadas.append(dica_escolhida)
-
-                        #Dica 3
-                        if int(dica_escolhida) == 3:
-                            atalho = ("Área do país: {:,} km2".format(area_pais_escolhido).replace(',','.'))
-                            dicas_compradas.append (atalho)
-                            lista[int(dica_escolhida)] = ""
-                            dicas_usadas.append(dica_escolhida)
-
-                        #Dica 4
-                        if int(dica_escolhida) == 4:
-                            atalho = (f'Continente do país: {continente_pais_escolhido}')
-                            dicas_compradas.append (atalho)
-                            lista[int(dica_escolhida)] = ""
-                            dicas_usadas.append(dica_escolhida)
+                            #Dica 4
+                            if int(dica_escolhida) == 4:
+                                atalho = (f'Continente do país: {continente_pais_escolhido}')
+                                dicas_compradas.append (atalho)
+                                lista[int(dica_escolhida)] = ""
+                                dicas_usadas.append(dica_escolhida)
+                            print("Distâncias:") 
+                            print("------------------------------------------")
+                            espaço = ""  
+                            for l in distancias_mais_perto:
+                                d = int(l[1])
+                                wq = ("{:,}".format(d).replace(',','.'))
+                                if l[0] == pergunta_inicial:
+                                    if d<1000:
+                                        print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+                                    if d>=1000 and d<10000:
+                                        print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+                                    if d>=10000:
+                                        print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
+                                    else:
+                                        if d<1000:
+                                            print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+                                        if d>=1000 and d<10000:
+                                            print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+                                        if d>=10000:
+                                            print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
+                            print("------------------------------------------")
+                            print("")
+                            print(f"{bcolors.ENDC}Dicas:")
+                            print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                            for q in dicas_compradas:
+                                if q == atalho:
+                                    print(f"{bcolors.OKBLUE}{q}")
+                                else:
+                                    print(q)
+                            print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+                        elif tentativas - (int(dica_escolhida) + 3) <= 0:
+                            print("")
+                            print(f"{fg.yellow}Você não possui tentativas suficientes para comprar essa dica")
+                    else:
+                        print("Esta dica não existe\n")
+                elif dica_escolhida == "5":
+                    print("")
+                else:
+                    print("Esta dica não existe\n")
+            elif pergunta_inicial in lista_paises:
+                if pergunta_inicial == pais_escolhido:
+                    tentativas -= 1
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    print(f"{bcolors.OKGREEN}Parabens, você acertou restando {tentativas} tentativa(s)! O país era {pais_escolhido}")
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    break
+                else:
+                    if pergunta_inicial not in paises_chutados:
+                        tentativas -= 1
+                        paises_chutados.append(pergunta_inicial)
+                        latitude = banco_de_dados[pergunta_inicial]["geo"]["latitude"]
+                        longitude = banco_de_dados[pergunta_inicial]["geo"]["longitude"]
+                        distancia = Funções.haversine(Dados.EARTH_RADIUS,latitude_pais_escolhido,longitude_pais_escolhido,latitude,longitude)
+                        Funções.adiciona_em_ordem(pergunta_inicial,distancia,distancias_mais_perto)
                         print("Distâncias:") 
                         print("------------------------------------------")
                         espaço = ""  
@@ -202,15 +294,14 @@ while continuar == "s":
                                     print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
                                 if d>=10000:
                                     print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
-                                else:
-                                    if d<1000:
-                                        print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
-                                    if d>=1000 and d<10000:
-                                        print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
-                                    if d>=10000:
-                                        print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
-                        print("------------------------------------------")
-                        print("")
+                            else:
+                                if d<1000:
+                                    print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+                                if d>=1000 and d<10000:
+                                    print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+                                if d>=10000:
+                                    print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
+                        print(f"{bcolors.ENDC}------------------------------------------")
                         print(f"{bcolors.ENDC}Dicas:")
                         print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
                         for q in dicas_compradas:
@@ -219,43 +310,31 @@ while continuar == "s":
                             else:
                                 print(q)
                         print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
-                    elif tentativas - (int(dica_escolhida) + 3) <= 0:
                         print("")
-                        print(f"{fg.yellow}Você não possui tentativas suficientes para comprar essa dica")
-                else:
-                    print("Esta dica não existe\n")
-            elif dica_escolhida == "5":
-                print("")
-            else:
-                print("Esta dica não existe\n")
-        elif pergunta_inicial in lista_paises:
-            if pergunta_inicial == pais_escolhido:
-                tentativas -= 1
-                print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-                print(f"{bcolors.OKGREEN}Parabens, você acertou restando {tentativas} tentativa(s)! O país era {pais_escolhido}")
-                print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-                break
-            else:
-                if pergunta_inicial not in paises_chutados:
-                    tentativas -= 1
-                    paises_chutados.append(pergunta_inicial)
-                    latitude = banco_de_dados[pergunta_inicial]["geo"]["latitude"]
-                    longitude = banco_de_dados[pergunta_inicial]["geo"]["longitude"]
-                    distancia = Funções.haversine(Dados.EARTH_RADIUS,latitude_pais_escolhido,longitude_pais_escolhido,latitude,longitude)
-                    Funções.adiciona_em_ordem(pergunta_inicial,distancia,distancias_mais_perto)
-                    print("Distâncias:") 
-                    print("------------------------------------------")
-                    espaço = ""  
-                    for l in distancias_mais_perto:
-                        d = int(l[1])
-                        wq = ("{:,}".format(d).replace(',','.'))
-                        if l[0] == pergunta_inicial:
-                            if d<1000:
-                                print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
-                            if d>=1000 and d<10000:
-                                print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
-                            if d>=10000:
-                                print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
+                    else:
+                        print("Você já escolheu esse país")
+                        print("")
+            elif pergunta_inicial == "desisto":
+                certeza = input("Você quer desistir mesmo? |s|n|:")
+                if certeza == "s":
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    tentativas = 0
+                    desistiu = "sim"
+            elif pergunta_inicial == "inventario":
+                print("Distâncias:")  
+                print("------------------------------------------") 
+                for l in distancias_mais_perto:
+                    d = int(l[1])
+                    wq = ("{:,}".format(d).replace(',','.'))
+                    if l[0] == pergunta_inicial:
+                        if d<1000:
+                            print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+                        if d>=1000 and d<10000:
+                            print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+                        if d>=10000:
+                            print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
                         else:
                             if d<1000:
                                 print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
@@ -263,58 +342,17 @@ while continuar == "s":
                                 print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
                             if d>=10000:
                                 print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
-                    print(f"{bcolors.ENDC}------------------------------------------")
-                    print(f"{bcolors.ENDC}Dicas:")
-                    print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
-                    for q in dicas_compradas:
-                        if q == atalho:
-                            print(f"{bcolors.OKBLUE}{q}")
-                        else:
-                            print(q)
-                    print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
-                    print("")
-                else:
-                    print("Você já escolheu esse país")
-                    print("")
-        elif pergunta_inicial == "desisto":
-            certeza = input("Você quer desistir mesmo? |s|n|:")
-            if certeza == "s":
-                print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-                print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
-                print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-                tentativas = 0
-                desistiu = "sim"
-        elif pergunta_inicial == "inventario":
-          print("Distâncias:")  
-          print("------------------------------------------") 
-          for l in distancias_mais_perto:
-            d = int(l[1])
-            wq = ("{:,}".format(d).replace(',','.'))
-            if l[0] == pergunta_inicial:
-              if d<1000:
-                print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
-              if d>=1000 and d<10000:
-                print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
-              if d>=10000:
-                print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")          
-            else:
-              if d<1000:
-                print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
-              if d>=1000 and d<10000:
-                print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
-              if d>=10000:
-                print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
-          print(f"{bcolors.ENDC}------------------------------------------")
-          print("")
-          print("Dicas:")
-          print(f"{bcolors.ENDC}------------------------------------------")
-          for q in dicas_compradas:
-            print(q)
-          print(f"{bcolors.ENDC}------------------------------------------")
-        elif pergunta_inicial not in lista_paises:
-          print("País desconhecido")
-    if desistiu != "sim" and tentativas == 0:
-      print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-      print(f"{bcolors.FAIL}Não foi dessa vez :(     A resposta era {pais_escolhido}")
-      print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-    continuar = input("Quer jogar novamente? |s|n|:")
+                print(f"{bcolors.ENDC}------------------------------------------")
+                print("")
+                print("Dicas:")
+                print(f"{bcolors.ENDC}------------------------------------------")
+                for q in dicas_compradas:
+                    print(q)
+                print(f"{bcolors.ENDC}------------------------------------------")
+            elif pergunta_inicial not in lista_paises:
+                print("País desconhecido")
+        if desistiu != "sim" and tentativas == 0:
+            print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+            print(f"{bcolors.FAIL}Não foi dessa vez :(     A resposta era {pais_escolhido}")
+            print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+        continuar = input("Quer jogar novamente? |s|n|:")
