@@ -126,8 +126,117 @@ while continuar == "s":
             else:
                 print("País desconhecido")
             print("============================================================================================================================================")
-
         continuar = input("Quer jogar novamente? |s|n|:")
+
+    if modo_jogo == "b":
+        print(f"{bcolors.ENDC}Um país foi escolhido dentro de {len(lista_paises)} países, tente advinhar!")
+        tentativas = 8
+        print("Nesse modo você terá que advinhar o país apartir apenas pelas cores de sua bandeira, sem dicas\n")
+        valor = 0
+        for c,v in banco_de_dados[pais_escolhido]["bandeira"].items():
+            if v>0:
+                if c == "vermelha":
+                    d = f"{bcolors.FAIL}{c}{reset}({v}%)"
+                elif c == "laranja":
+                    d = f"{fg.red}{c}{reset}({v}%)"
+                elif c == "amarela":
+                    d = f"{fg.yellow}{c}{reset}({v}%)"
+                elif c == "verde":
+                    d = f"{fg.green}{c}{reset}({v}%)"
+                elif c == "azul":
+                    d = f"{fg.blue}{c}{reset}({v}%)"
+                elif c == "azul claro":
+                    d = f"{fg.cyan}{c}{reset}({v}%)"
+                elif c == "preta":
+                    d = f"{fg.black}{c}{reset}({v}%)"
+                elif c == "branca":
+                    d = f"{c}({v}%)"
+                elif c == "outras":
+                    d = f"{reverse}{c}{reset}({v}%)"
+                cores_da_bandeira_lista.append(d)
+        cores_da_bandeira_juntas = (', '.join(cores_da_bandeira_lista))
+        atalho = (f"{cores_da_bandeira_juntas}")
+        while tentativas > 0:
+            print(f"{bcolors.ENDC}-----------------------------------------------------------------------------------------------------------------------------------------------------------")
+            print(f"A bandeira do pais possui {atalho}\n")
+            print(f"O continente é {continente_pais_escolhido}")
+            print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)")
+            print("")
+            pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?:")
+            print(f"{bcolors.ENDC}===========================================================================================================================================================")
+            if pergunta_inicial in lista_paises:
+                    if pergunta_inicial == pais_escolhido:
+                        tentativas -= 1
+                        print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                        print(f"{bcolors.OKGREEN}Parabens, você acertou restando {tentativas} tentativa(s)! O país era {pais_escolhido}")
+                        print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                        break
+                    else:
+                        if pergunta_inicial not in paises_chutados:
+                            tentativas -= 1
+                            paises_chutados.append(pergunta_inicial)
+                            latitude = banco_de_dados[pergunta_inicial]["geo"]["latitude"]
+                            longitude = banco_de_dados[pergunta_inicial]["geo"]["longitude"]
+                            distancia = Funções.haversine(latitude,longitude)
+                            Funções.adiciona_em_ordem(pergunta_inicial,distancia,distancias_mais_perto)
+                            print("Distâncias:")
+                            print("------------------------------------------")
+                            espaço = ""
+                            for l in distancias_mais_perto:
+                                d = int(l[1])
+                                wq = ("{:,}".format(d).replace(',','.'))
+                                if l[0] == pergunta_inicial:
+                                    if d<1000:
+                                        print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+                                    if d>=1000 and d<10000:
+                                        print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+                                    if d>=10000:
+                                        print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")
+                                else:
+                                    if d<1000:
+                                        print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+                                    if d>=1000 and d<10000:
+                                        print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+                                    if d>=10000:
+                                        print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
+                            print(f"{bcolors.ENDC}------------------------------------------")
+            elif pergunta_inicial == "desisto":
+                certeza = input("Você quer desistir mesmo? |s|n|:")
+                if certeza == "s":
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    tentativas = 0
+                    desistiu = "sim"
+            elif pergunta_inicial == "inventario":
+                print("Distâncias:")
+                print("------------------------------------------")
+                for l in distancias_mais_perto:
+                    d = int(l[1])
+                    wq = ("{:,}".format(d).replace(',','.'))
+                    if l[0] == pergunta_inicial:
+                        if d<1000:
+                            print(f"{fg.lightblue}{underline}{bold} {espaço:3}{wq} km --> {l[0]}")
+                        if d>=1000 and d<10000:
+                            print(f"{fg.yellow}{underline}{bold} {espaço:1}{wq} km --> {l[0]}")
+                        if d>=10000:
+                            print(f"{fg.lightred}{underline}{bold} {wq:3} km --> {l[0]}")
+                    else:
+                        if d<1000:
+                            print(f"{reset}{fg.lightblue} {espaço:3}{wq} km --> {l[0]}")
+                        if d>=1000 and d<10000:
+                            print(f"{reset} {fg.yellow} {wq:4} km --> {l[0]}")
+                        if d>=10000:
+                            print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
+            elif pergunta_inicial not in lista_paises:
+                print("País desconhecido")
+        if desistiu != "sim" and tentativas == 0:
+            print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+            print(f"{bcolors.FAIL}Não foi dessa vez :(     A resposta era {pais_escolhido}")
+            print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+        continuar = input("Quer jogar novamente? |s|n|:")
+
+
 
     if modo_jogo == "n":
         print ("")
