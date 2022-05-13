@@ -95,7 +95,7 @@ while continuar == "s":
     contador_letra = 1
 
     print(f"{fg.yellow}Modos de jogo: Normal|n|, Bandeira|b|, Capitais|c|{reset}\n")
-    modo_jogo = input("Escolha um modo de jogo |n|b|c|:")
+    modo_jogo = input("Escolha um modo de jogo |n|b|c|: ")
     print("============================================================================================================================================")
     
     if modo_jogo == "c":
@@ -126,7 +126,7 @@ while continuar == "s":
             else:
                 print("País desconhecido")
             print("============================================================================================================================================")
-        continuar = input("Quer jogar novamente? |s|n|:")
+        continuar = input("Quer jogar novamente? |s|n|: ")
 
     if modo_jogo == "b":
         print(f"{bcolors.ENDC}Um país foi escolhido dentro de {len(lista_paises)} países, tente advinhar!")
@@ -162,7 +162,7 @@ while continuar == "s":
             print(f"O continente é {continente_pais_escolhido}")
             print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)")
             print("")
-            pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?:")
+            pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?: ")
             print(f"{bcolors.ENDC}===========================================================================================================================================================")
             if pergunta_inicial in lista_paises:
                     if pergunta_inicial == pais_escolhido:
@@ -177,7 +177,7 @@ while continuar == "s":
                             paises_chutados.append(pergunta_inicial)
                             latitude = banco_de_dados[pergunta_inicial]["geo"]["latitude"]
                             longitude = banco_de_dados[pergunta_inicial]["geo"]["longitude"]
-                            distancia = Funções.haversine(latitude,longitude)
+                            distancia = Funções.haversine(Dados.EARTH_RADIUS,latitude_pais_escolhido,longitude_pais_escolhido,latitude,longitude)
                             Funções.adiciona_em_ordem(pergunta_inicial,distancia,distancias_mais_perto)
                             print("Distâncias:")
                             print("------------------------------------------")
@@ -201,7 +201,7 @@ while continuar == "s":
                                         print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
                             print(f"{bcolors.ENDC}------------------------------------------")
             elif pergunta_inicial == "desisto":
-                certeza = input("Você quer desistir mesmo? |s|n|:")
+                certeza = input("Você quer desistir mesmo? |s|n|: ")
                 if certeza == "s":
                     print(f"{bcolors.ENDC}-------------------------------------------------------------------")
                     print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
@@ -234,7 +234,7 @@ while continuar == "s":
             print(f"{bcolors.ENDC}-------------------------------------------------------------------")
             print(f"{bcolors.FAIL}Não foi dessa vez :(     A resposta era {pais_escolhido}")
             print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-        continuar = input("Quer jogar novamente? |s|n|:")
+        continuar = input("Quer jogar novamente? |s|n|: ")
 
 
 
@@ -424,7 +424,7 @@ while continuar == "s":
                         print("Você já escolheu esse país")
                         print("")
             elif pergunta_inicial == "desisto":
-                certeza = input("Você quer desistir mesmo? |s|n|:")
+                certeza = input("Você quer desistir mesmo? |s|n|: ")
                 if certeza == "s":
                     print(f"{bcolors.ENDC}-------------------------------------------------------------------")
                     print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
@@ -464,4 +464,4 @@ while continuar == "s":
             print(f"{bcolors.ENDC}-------------------------------------------------------------------")
             print(f"{bcolors.FAIL}Não foi dessa vez :(     A resposta era {pais_escolhido}")
             print(f"{bcolors.ENDC}-------------------------------------------------------------------")
-        continuar = input("Quer jogar novamente? |s|n|:")
+        continuar = input("Quer jogar novamente? |s|n|: ")
