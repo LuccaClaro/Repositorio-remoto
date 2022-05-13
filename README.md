@@ -12,3 +12,6 @@ v3 - 10/05/2022
 
 v4 - 11/05/2022
   Foi atualizado o Código do jogo, adicionando o respectivo menu do jogo com todas as funções e opções visíveis, também foram adicionadas as dicas e cores no código.
+
+v5 - 12/05/2022
+  Foi atualizado o Código do jogo, adicionando outro modo de jogo diferente do modo tradicional, este novo modo disponibiliza as letras da capital embaralhadas para o jogador adivinhar o respectivo país. Vale ressaltar que este modo de jogo é uma adição ao jogo inicial e foi criado apenas para testar os limites do código original, além disso ele não deve ser avaliado em fins acadêmicos a fim de atribuir uma nota aos estudantes.
