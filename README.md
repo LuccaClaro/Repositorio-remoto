@@ -15,3 +15,6 @@ v4 - 11/05/2022
 
 v5 - 12/05/2022
   Foi atualizado o Código do jogo, adicionando outro modo de jogo diferente do modo tradicional, este novo modo disponibiliza as letras da capital embaralhadas para o jogador adivinhar o respectivo país. Vale ressaltar que este modo de jogo é uma adição ao jogo inicial e foi criado apenas para testar os limites do código original, além disso ele não deve ser avaliado em fins acadêmicos a fim de atribuir uma nota aos estudantes.
+
+v6 - 13/05/2022
+  Foi atualizado o Código do jogo, adicionando espaços após perguntas (input) para deixar o Design do jogo mais organizado e limpo, outra adição foi o modo de jogo de bandeiras, neste modo de jogo é mostrado no terminal as cores da bandeira do respectivo país juntamente com suas porcentagens, o jogador deve então adivinhar o país sorteado se baseando nas cores que foram disponibilizadas.
