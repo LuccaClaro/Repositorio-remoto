@@ -107,11 +107,12 @@ while continuar == "s":
             capital_pais_escolhido = banco_de_dados[pais_escolhido]["capital"]
             continente_pais_escolhido = banco_de_dados[pais_escolhido]['continente']
             print(f"Sua pontuação:{fg.pink}{pontuação}{reset}")
-            original = input(f"Qual é o país cuja capital capital é {fg.pink}{capital_pais_escolhido}{reset} e o continente é {fg.pink}{continente_pais_escolhido}{reset}?:\n")
+            original = input(f"Qual é o país cuja capital capital é {fg.pink}{capital_pais_escolhido}{reset} e o continente é {fg.pink}{continente_pais_escolhido}{reset}?:")
             processamento_2 = unicodedata.normalize("NFD", original)
             processamento_2 = processamento_2.encode("ascii", "ignore")
             processamento_2 = processamento_2.decode("utf-8")
             tentativa = processamento_2.lower()
+            print("")
             if tentativa in lista_paises:
                 if tentativa == pais_escolhido:
                     print(f"{bcolors.OKGREEN}Correto{reset}")
@@ -123,13 +124,22 @@ while continuar == "s":
                     print(f"{bcolors.FAIL}Incorreto, a resposta era {fg.pink}{pais_escolhido}{reset}\n")
                     print(f"Pontuação final {fg.pink}{pontuação}{reset}")
                     break
+            elif tentativa == "desisto":
+                certeza = input("Você quer desistir mesmo? |s|n|: ")
+                if certeza == "s":
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    print(f"{bcolors.FAIL}Folgado, a resposta era {pais_escolhido}")
+                    print(f"{bcolors.ENDC}-------------------------------------------------------------------")
+                    break
             else:
                 print("País desconhecido")
             print("============================================================================================================================================")
+        print("")
         continuar = input("Quer jogar novamente? |s|n|: ")
 
     if modo_jogo == "b":
         print(f"{bcolors.ENDC}Um país foi escolhido dentro de {len(lista_paises)} países, tente advinhar!")
+        print("")
         tentativas = 8
         print("Nesse modo você terá que advinhar o país apartir apenas pelas cores de sua bandeira, sem dicas\n")
         valor = 0
@@ -162,7 +172,14 @@ while continuar == "s":
             print(f"O continente é {continente_pais_escolhido}")
             print (f"{bcolors.ENDC}Você tem {fg.pink}{tentativas}{bcolors.ENDC} tentativa(s)")
             print("")
-            pergunta_inicial = input(f"{bcolors.ENDC}Qual seu palpite?: ")
+            original = input(f"{bcolors.ENDC}Qual seu palpite?: ")
+            print("")
+            print("")
+            print("")
+            processamento_2 = unicodedata.normalize("NFD", original)
+            processamento_2 = processamento_2.encode("ascii", "ignore")
+            processamento_2 = processamento_2.decode("utf-8")
+            pergunta_inicial = processamento_2.lower()
             print(f"{bcolors.ENDC}===========================================================================================================================================================")
             if pergunta_inicial in lista_paises:
                     if pergunta_inicial == pais_escolhido:
@@ -200,6 +217,9 @@ while continuar == "s":
                                     if d>=10000:
                                         print(f"{reset}{fg.lightred} {wq:3} km --> {l[0]}")
                             print(f"{bcolors.ENDC}------------------------------------------")
+                        else:
+                            print(f"{fg.yellow}Você já escolheu esse país{reset}")
+                            print("")
             elif pergunta_inicial == "desisto":
                 certeza = input("Você quer desistir mesmo? |s|n|: ")
                 if certeza == "s":
