@@ -107,7 +107,7 @@ while continuar == "s":
             capital_pais_escolhido = banco_de_dados[pais_escolhido]["capital"]
             continente_pais_escolhido = banco_de_dados[pais_escolhido]['continente']
             print(f"Sua pontuação:{fg.pink}{pontuação}{reset}")
-            original = input(f"Qual é o país cuja capital capital é {fg.pink}{capital_pais_escolhido}{reset} e o continente é {fg.pink}{continente_pais_escolhido}{reset}?:")
+            original = input(f"Qual é o país cuja capital capital é {fg.pink}{capital_pais_escolhido}{reset} e o continente é {fg.pink}{continente_pais_escolhido}{reset}?: ")
             processamento_2 = unicodedata.normalize("NFD", original)
             processamento_2 = processamento_2.encode("ascii", "ignore")
             processamento_2 = processamento_2.decode("utf-8")
